@@ -19,7 +19,7 @@ func InsertUser(user *User) (int64, error) {
 }
 
 func QueryUserWithUserName(username string) int {
-	sql := fmt.Sprintf("select id from user where username=%s", username)
+	sql := fmt.Sprintf("select id from user where username='%s'", username)
 	row:=utils.QueryRow(sql)
 	id:=0
 	row.Scan(&id)
