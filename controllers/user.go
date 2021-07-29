@@ -4,6 +4,7 @@ import (
 	"fmt"
 	beego "github.com/beego/beego/v2/server/web"
 	"productgo/models"
+	"productgo/utils"
 	"time"
 )
 
@@ -46,7 +47,7 @@ func (r *RegisterController) Post() {
 		r.ServeJSON()
 		return
 	}
-	user := models.User{0, username, password, time.Now().Unix()}
+	user := models.User{0, username, utils.MD5(password), time.Now().Unix()}
 	_, err := models.InsertUser(&user)
 	if err != nil {
 		r.Data["json"] = map[string]interface{}{
@@ -61,4 +62,26 @@ func (r *RegisterController) Post() {
 	}
 	r.ServeJSON()
 
+}
+
+
+func (l *LoginController) Post(){
+	username:=l.GetString("username")
+	password:=l.GetString("password")
+	fmt.Println(username,password)
+
+	id := models.QueryUserWithParam(username,utils.MD5(password))
+	if id <= 0{
+		l.Data["json"] = map[string]interface{}{
+			"code":    0,
+			"message": "登录失败",
+		}
+	}else{
+		l.Data["json"] = map[string]interface{}{
+			"code":    1,
+			"message": "登录成功",
+		}
+		l.SetSession("login_uid",id)
+	}
+	l.ServeJSON()
 }

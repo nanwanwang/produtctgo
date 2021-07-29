@@ -9,7 +9,7 @@ var db *sql.DB
 
 func InitMySQL() error {
 	if db == nil {
-		db0, err := sql.Open("mysql", "root:123456@tcp(localhost:3306)/productgo")
+		db0, err := sql.Open("mysql", "root:123456@tcp(192.168.1.103:3306)/productgo")
 		if err != nil {
 			return err
 		}

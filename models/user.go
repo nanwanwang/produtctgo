@@ -25,3 +25,12 @@ func QueryUserWithUserName(username string) int {
 	row.Scan(&id)
 	return  id
 }
+
+
+func QueryUserWithParam(username,password string) int{
+	sql:=fmt.Sprintf("select id from user where username='%s' and password='%s'",username,password)
+	row:=utils.QueryRow(sql)
+	id:=0
+	row.Scan(&id)
+	return id
+}

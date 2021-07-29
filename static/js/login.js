@@ -1,20 +1,19 @@
-$(document).ready(function () {
-    $("#register-form").submit(function (event) {
+$(document).ready(function(){
+    $("#login-form").submit(function (event){
         event.preventDefault();
         $.ajax({
-            type: 'POST',
-            url: '/register',
+            type:'POST',
+            url:'/login',
             data: {
                 'username': $('input[name=username]').val(),
-                'password': $('input[name=password]').val(),
-                'repassword': $('input[name=repassword]').val()
+                'password': $('input[name=password]').val()
             },
             dataType: 'json',
             encode: true
         }).done(function (data) {
             console.log(data);
             if (data.code === 1) {
-                window.location.url='/';
+                window.location.href = '/';
             } else {
                 alert(data.message)
             }

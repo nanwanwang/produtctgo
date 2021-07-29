@@ -10,6 +10,7 @@ func main() {
 	if err := utils.InitMySQL(); err != nil {
 		panic(err)
 	}
-
+	//打开session
+	beego.BConfig.WebConfig.Session.SessionOn = true
 	beego.Run()
 }
